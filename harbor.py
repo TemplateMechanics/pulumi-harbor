@@ -139,6 +139,22 @@ class Projects(BaseResource):
         args.name = args.name or self.context.get_default_resource_name(self.name)
         project_args = mapper.to(harbor.ProjectArgs).map(args, use_deepcopy=False, skip_none_values=True)
         return harbor.Project(self.context.get_default_resource_name(self.name), project_args)
+    
+class Registries(BaseResource):
+    
+        def __init__(self, name: str, context: BuildContext):
+            super().__init__(name, context)
+        
+        async def find(self, id: Optional[str] = None) -> Optional[harbor.Registry]:
+            if not id:
+                return None
+            
+            return harbor.Registry.get(self.context.get_default_resource_name(self.name), id)
+        
+        async def create(self, args: harbor.RegistryArgs) -> harbor.Registry:
+            args.name = args.name or self.context.get_default_resource_name(self.name)
+            registry_args = mapper.to(harbor.RegistryArgs).map(args, use_deepcopy=False, skip_none_values=True)
+            return harbor.Registry(self.context.get_default_resource_name(self.name), registry_args)
 #endregion
 
 class ResourceBuilder:
@@ -149,6 +165,7 @@ class ResourceBuilder:
     
     async def build(self, config: config.Harbor):
         await self.build_projects(config.projects)
+        await self.build_registries(config.registries)
     
     async def build_projects(self, configs: Optional[list[config.Projects]] = None):
         if configs is None:
@@ -156,4 +173,12 @@ class ResourceBuilder:
 
         for config in configs:
             builder = Projects(config.name, self.context)
+            await builder.build(config.id, config.args)
+
+    async def build_registries(self, configs: Optional[list[config.Registries]] = None):
+        if configs is None:
+            return
+
+        for config in configs:
+            builder = Registries(config.name, self.context)
             await builder.build(config.id, config.args)
