@@ -32,7 +32,15 @@ If you use Pulumi cloud:
 ```bash
 pulumi login
 ```
-then
+Before you continue you will need to setup the Pulumi config for Harbor please run the following commands:
+```bash
+pulumi config set harbor:url <YOURHARBORURL>
+pulumi config set harbor:username <YOURHARBORUSERNAME>
+pulumi config set harbor:password <YOURHARBORPASSWORD> --secret
+pulumi config set harbor:insecure <TRUEorFALSE>
+pulumi config set harbor:apiVersion <DEFAULTis2>
+``` 
+Once complete you should see entries in your pulumi.YOURSTACKNAME.yaml. Once they are set you can run:
 ```bash
 pulumi up
 ```
