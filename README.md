@@ -1,9 +1,14 @@
 This Python-based tool uses Pulumi to dynamically create resources within a Harbor Registry based on a YAML configuration file.
 
+## References
+- https://www.pulumi.com/registry/packages/harbor/
+- https://goharbor.io/
+- https://goharbor.io/docs
+
 ## Dependencies
 - Python 3.7+
 - Pulumi
-- A Harbor Deployment See https://github.com/TemplateMechanics/k8s-gitops-local-public/tree/main/harbor for a way to bring this up using GitOps conceps and Flux
+- A Harbor Deployment See https://github.com/TemplateMechanics/k8s-gitops-local-public/tree/main/harbor for a way to bring this up using GitOps concepts and Flux.
 
 Clone this repository and go to the directory of the project and create a new venv and activate it like this:
 ```bash
@@ -22,8 +27,8 @@ pip install pulumi pulumiverse-harbor dataclass-wizard automapper
 ```
 ## Usage
 
-First, I would setup Pulumi. You can create a free account on the [Pulumi website](https://app.pulumi.com/site/signup). After creating your account, login via the Pulumi CLI (This isn't required but you will need to setup another place to store the state file see: https://www.pulumi.com/docs/concepts/state/)
-If you use Pulumi cloud which is free for personal users:
+First, I would setup Pulumi Cloud. You can create a free personal account on the [Pulumi website](https://app.pulumi.com/site/signup). After creating your account, login via the Pulumi CLI (This isn't required but you will need to setup another place to store the state file see: https://www.pulumi.com/docs/concepts/state/)
+If you use Pulumi cloud:
 ```bash
 pulumi login
 ```
